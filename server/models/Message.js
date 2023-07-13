@@ -1,7 +1,15 @@
-import mongoose from "mongoose";
 
-const MessageSchema = new mongoose.Schema({});
+const mongoose = require('mongoose');
 
-const Message = mongoose.model("message", MessageSchema);
+const messageSchema = new mongoose.Schema({
+  user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  content: { type: String, required: true },
+  dates: {
+    created: { type: Date, default: Date.now() },
+    last_edited: Date
+  },
+  category: { type: String, enum: ['category1', 'category2', 'category3'] },
+  deleted: Boolean
+});
 
-export default Message;
+module.exports = mongoose.model('Message', messageSchema);
